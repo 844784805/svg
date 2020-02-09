@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #app,svg{
+      width: 600px;
+      height: 500px;
+      background-color: yellowgreen;
+    }
+  </style>
+</head>
+<body>
+  <!-- <svg xmlns="http://www.w3.org/2000/svg"  version="1.1">
+  <g cursor='pointer'>
+    <line x1=10 y1=30  x2=300 y2=200 stroke='red'></line>
+    <line x1=10 y1=30  x2=300 y2=200 stroke='transparent' stroke-width='5'></line>
+    <rect x=140 y=100 width=30 height=30 fill='#999' rx=5></rect>
+    <text font-size=20 x=155 y=123 fill='white' text-anchor='middle'>?</text>
+  </g>
+  <g cursor='pointer'>
+    <circle cx=10 cy=30 r=20 fill='white' stroke='white'></circle>
+    <text x=10 y=34 font-size=12 text-anchor='middle'>网易</text>
+  </g>
+  <g cursor='pointer'>
+    <circle cx=300 cy=200 r=50 fill='white' stroke='white'></circle>
+    <text x=300 y=208 font-size=20 text-anchor='middle'>it行业</text>
+  </g>
+  </svg> -->
+  <div id='app'></div>
+  <script>
+    var sName='http://www.w3.org/2000/svg'
+    var oSvg=createTag('svg',{width:'100%',height:'100%'})
+    console.log(oSvg)
+    // var circle=`
+    // <g cursor='pointer'>
+    //   <line x1=10 y1=30  x2=300 y2=200 stroke='red'></line>
+    //   <line x1=10 y1=30  x2=300 y2=200 stroke='transparent' stroke-width='5'></line>
+    //   <rect x=140 y=100 width=30 height=30 fill='#999' rx=5></rect>
+    //   <text font-size=20 x=155 y=123 fill='white' text-anchor='middle'>?</text>
+    // </g>
+    // `
+    document.getElementById('app').appendChild(oSvg)
+    oSvg.setAttribute('xmlns',sName)
+    // oSvg.appendChild(circle)
+    var centerX = document.getElementById('app').offsetWidth/2
+    console.log(document.getElementById('app').offsetWidth)
+    var centerY = document.getElementById('app').offsetHeight/2
+    function createTag(tag,obj){
+      var Tag = document.createElementNS(sName, tag)
+      for(var attr in obj){
+        Tag.setAttribute(attr, obj[attr])
+      }
+      return Tag
+    }
+    var g = createTag('g')
+    var line1 = createTag('line', {x1:150,y1:150, x2:centerX,y2:centerY, stroke:'#999'})
+    var text = createTag('text',{x:(centerX+150)/2,y:(centerY+150)/2+5,"font-size":14,"text-anchor":'middle',fill:'white'})
+    var rect = createTag('rect', {x:(centerX+150)/2-10,y:(centerY+150)/2-10, width:20, height:20, fill:'#333'})
+    text.innerHTML='?'
+    g.appendChild(line1)
+    g.appendChild(rect)
+    g.appendChild(text)
+    oSvg.appendChild(g)
+
+    var g = createTag('g',{cursor:"pointer"})
+    var text = createTag('text',{x:150,y:150+8,"font-size":20,"text-anchor":'middle'})
+    var circle = createTag("circle",{cx:150,cy:150,r:20,fill:'white',stroke:'red'})
+    text.innerHTML='js'
+    g.appendChild(circle)
+    g.appendChild(text)
+    oSvg.appendChild(g)
+
+    for(var i=0;i<9;i++){
+      var x=Math.sin(i*40*Math.PI/180)*150+centerX
+      var y=Math.cos(i*40*Math.PI/180)*150+centerY
+      console.log(x,y)
+      var g = createTag('g')
+      var line1 = createTag('line', {x1:x,y1:y, x2:centerX,y2:centerY, stroke:'#999'})
+      var text = createTag('text',{x:(centerX+x)/2,y:(centerY+y)/2+5,"font-size":14,"text-anchor":'middle',fill:'white'})
+      var rect = createTag('rect', {x:(centerX+x)/2-10,y:(centerY+y)/2-10, width:20, height:20, fill:'#333'})
+      text.innerHTML='?'
+      g.appendChild(line1)
+      g.appendChild(rect)
+      g.appendChild(text)
+      oSvg.appendChild(g)
+      var g = createTag('g',{cursor:"pointer"})
+      var text = createTag('text',{x:x,y:y+8,"font-size":20,"text-anchor":'middle'})
+      var circle = createTag("circle",{cx:x,cy:y,r:20,fill:'white',stroke:'red'})
+      text.innerHTML=i+1
+      g.appendChild(circle)
+      g.appendChild(text)
+      oSvg.appendChild(g)
+    }
+  
+    var g = createTag('g',{cursor:"pointer",class:'circle'})
+    var text = createTag('text',{x:centerX,y:centerY+8,"font-size":20,"text-anchor":'middle'})
+    var circle = createTag("circle",{cx:centerX,cy:centerY,r:40,fill:'white',stroke:'red'})
+    text.innerHTML='前端'
+    g.appendChild(circle)
+    g.appendChild(text)
+    oSvg.appendChild(g)
+
+    document.querySelector('.circle').onmouseover = function(){
+      console.log(this.querySelector('circle'));
+      this.querySelector('circle').setAttribute('r',50)
+    }
+    document.querySelector('.circle').onmouseout = function(){
+      console.log(this.querySelector('circle'));
+      this.querySelector('circle').setAttribute('r',40)
+    }
+  </script>
+</body>
+</html>  
