@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <svg id='circle' xmlns='http://www.w3.org/2000/svg' width=500 height=500>
+    <!-- <path d='M0 0L100 10L30 60ZM40 40L80 90' stroke='black' fill='none'></path> -->
+    <!-- <path d='M10 20H200V100V350' stroke='black' fill='none'></path> -->
+    <!-- <path d='M10 20A100 100 0 0 1 40 20L30 30A100 100 0 0 0 20 30Z' stroke='black'></path> -->
+  </svg>
+  <script>
+    var centerX = 100
+    var centerY = 100
+    var outR = 100
+    var innerR = 50
+    var ang = [20,30,10,40]
+    var outXY = [{x:200,y:100}]
+    var innerXY = [{x:150,y:100}]
+    var color=['#333',"#666",'#999', '#ccc']
+    var sName = 'http://www.w3.org/2000/svg'
+    function createTag(tag,obj){
+      var oTag = document.createElementNS(sName,tag)
+      for(var attr in obj){
+        oTag.setAttribute(attr, obj[attr])
+      }
+      return oTag
+    }
+    var sunAng=0
+    ang.forEach((item,index)=>{
+      var angle = item/100*360
+      sunAng+= angle
+      if(index == ang.length){
+        sunAng = 360
+      }
+      outX = Math.cos(sunAng*Math.PI/180)*outR+centerX
+      outY = Math.sin(sunAng*Math.PI/180)*outR+centerY
+      outXY.push({x:outX,y:outY})
+
+      innerX = Math.cos(sunAng*Math.PI/180)*innerR+centerX
+      innerY = Math.sin(sunAng*Math.PI/180)*innerR+centerY
+      innerXY.push({x:innerX,y:innerY})      
+    })
+    console.log(innerXY)
+    innerXY.forEach((item,index)=>{
+      var oPath = createTag('path',{fill: color[index],d:`M${outXY[index].x} ${outXY[index].y}A${outR} ${outR} 0 0 1 ${outXY[index+1].x} ${outXY[index+1].y}L${innerXY[index+1].x} ${innerXY[index+1].y}A${innerR} ${innerR} 0 0 0 ${innerXY[index].x} ${innerXY[index].y}Z`}) 
+      document.getElementById('circle').appendChild(oPath)
+    })
+  </script>
+</body>
+</html>
